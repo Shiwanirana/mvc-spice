@@ -13,7 +13,7 @@ export function loadState(){
   if(data){
     console.log(data, "data1")
    ProxyState.recipes = data.recipes.map (r => new Recipe(r))
-   
+  
    ProxyState.steps = data.steps.map (s=> new Step(s))
 
    ProxyState.ingredients = data.ingredients.map(i=> new Ingredient(i))

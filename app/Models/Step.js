@@ -17,7 +17,7 @@ export default class Step{
         <span >&times;</span>
         </button>
         </div>
-        </dd>
+      
         `
   }
 }

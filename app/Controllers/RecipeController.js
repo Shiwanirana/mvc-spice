@@ -12,6 +12,7 @@ function _drawRecipe(){
 export default class RecipeController{
   constructor(){
     ProxyState.on("recipes", _drawRecipe)
+    ProxyState.on("steps", _drawRecipe)
     _drawRecipe
   }
 

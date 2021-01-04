@@ -12,7 +12,7 @@ export default class Recipe{
 
   get Template(){
     return `
-    <div class="col-3 mx-4" data-toggle="modal" data-target="#new-recipe-detail">
+    <div class="col-3 mx-4" data-toggle="modal" data-target="#new-recipe-${this.id}">
             <div class="card" style="min-width: 20rem;">
                 <img class="card-img-top" src="${this.imgUrl}" alt="Card image cap">
                 <div class="card-body">
@@ -22,7 +22,7 @@ export default class Recipe{
               </div>
           </div>
 
-          <div class="modal fade" id="new-recipe-detail" role="dialog">
+          <div class="modal fade" id="new-recipe-${this.id}" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         
@@ -45,12 +45,12 @@ export default class Recipe{
   <div class="card-body text-success bg-orange">
     <p class="card-text"><h5>List Items:</h5>
        <dl>
-         ${this.Steps}
+        ' ${this.Steps}'
       </dl></p>
       <form class="no-outline" onsubmit="app.stepController.addStep(event, '${this.id}')">
          <div class="form-group">
            <label for="listItemName">list Item:</label>
-           <input type="text" name="itemTitle" class="form-control" placeholder="Add Steps.." aria-describedby="helpId">
+           <input type="text" name="title" class="form-control" placeholder="Add Steps.." aria-describedby="helpId">
            <button type="submit" class="btn btn-outline-'${this.color}' btn-sm">+</button>
          </div>
       </form>
@@ -79,7 +79,7 @@ export default class Recipe{
                 <form class="no-outline" onsubmit="app.IngredientController.addIngredient(event, '${this.id}')">
                    <div class="form-group">
                      <label for="listItemName">list Item:</label>
-                     <input type="text" name="itemTitle" class="form-control" placeholder="Type a list item in here..." aria-describedby="helpId">
+                     <input type="text" name="title" class="form-control" placeholder="Type a list item in here..." aria-describedby="helpId">
                      <button type="submit" class="btn btn-outline-'${this.color}' btn-sm">+</button>
                    </div>
                 </form>
@@ -105,6 +105,7 @@ export default class Recipe{
     `
   }
   get Steps(){
+  
     let template = ''
     let steps = ProxyState.steps.filter(s=>s.recipeId == this.id)
     steps.forEach(s=>template += s.Template)
@@ -112,9 +113,9 @@ export default class Recipe{
   }
 
   get Ingredients(){
-    let template = ''
+    let template1 = ''
     let ingredients = ProxyState.ingredients.filter(i=>i.recipeId == this.id)
-    ingredients.forEach(i=>template += i.Template)
-    return template
+    ingredients.forEach(i=>template1 += i.Template)
+    return template1
   }
 }
