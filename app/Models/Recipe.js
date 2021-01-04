@@ -1,4 +1,5 @@
 // import { ProxyState} from "../AppState.js"
+import { ProxyState } from "../AppState.js";
 import { generateId } from "../utils/GenerateId.js";
 
 export default class Recipe{
@@ -35,7 +36,7 @@ export default class Recipe{
             
     <div class="card border-success mb-3  rounded shadow-lg" style="min-width: 15rem;">
   <div class="card-header bg-warning text-center">
-  <button type="button" class="close text-danger" onclick="app.listController.delete('${this.id}')">
+  <button type="button" class="close text-danger" onclick="app.stepController.edit('${this.id}')">
      <span><i class="fas fa-pen"></i></span>
      </button>
   <h5 class="text-center">Recipe steps</h5>
@@ -44,12 +45,12 @@ export default class Recipe{
   <div class="card-body text-success bg-orange">
     <p class="card-text"><h5>List Items:</h5>
        <dl>
-         ${this.Items}
+         ${this.Steps}
       </dl></p>
-      <form class="no-outline" onsubmit="app.itemController.addListItem(event, '${this.id}')">
+      <form class="no-outline" onsubmit="app.stepController.addStep(event, '${this.id}')">
          <div class="form-group">
            <label for="listItemName">list Item:</label>
-           <input type="text" name="itemTitle" class="form-control" placeholder="Type a list item in here..." aria-describedby="helpId">
+           <input type="text" name="itemTitle" class="form-control" placeholder="Add Steps.." aria-describedby="helpId">
            <button type="submit" class="btn btn-outline-'${this.color}' btn-sm">+</button>
          </div>
       </form>
@@ -64,7 +65,7 @@ export default class Recipe{
             <button type="button" class="close mb-4" data-dismiss="modal">&times;</button>
             <div class="card border-success mt-5 mb-3  rounded shadow-lg" style="min-width: 15rem;">
             <div class="card-header bg-warning text-center">
-            <button type="button" class="close text-danger" onclick="app.listController.delete('${this.id}')">
+            <button type="button" class="close text-danger" onclick="app.IngredientController.edit('${this.id}')">
                <span><i class="fas fa-pen"></i></span>
                </button>
             <h5 class="text-center">Ingredients</h5>
@@ -73,9 +74,9 @@ export default class Recipe{
             <div class="card-body text-success bg-orange">
               <p class="card-text"><h5>List Items:</h5>
                  <dl>
-                   ${this.Items}
+                   ${this.Ingredients}
                 </dl></p>
-                <form class="no-outline" onsubmit="app.itemController.addListItem(event, '${this.id}')">
+                <form class="no-outline" onsubmit="app.IngredientController.addIngredient(event, '${this.id}')">
                    <div class="form-group">
                      <label for="listItemName">list Item:</label>
                      <input type="text" name="itemTitle" class="form-control" placeholder="Type a list item in here..." aria-describedby="helpId">
@@ -102,5 +103,18 @@ export default class Recipe{
     </div>
   </div>
     `
+  }
+  get Steps(){
+    let template = ''
+    let steps = ProxyState.steps.filter(s=>s.recipeId == this.id)
+    steps.forEach(s=>template += s.Template)
+    return template
+  }
+
+  get Ingredients(){
+    let template = ''
+    let ingredients = ProxyState.ingredients.filter(i=>i.recipeId == this.id)
+    ingredients.forEach(i=>template += i.Template)
+    return template
   }
 }
